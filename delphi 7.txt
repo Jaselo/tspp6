@@ -1,0 +1,48 @@
+*Открыть файл*
+ShellExecute(0,'Open',pchar('путь к файлу'),nil ,nil,1);
+
+WinExec('путь к файлу', SW_SHOW);
+
+Memo1.Lines.LoadFromFile('text.txt');
+
+*Размер программы*
+form1.Width:=136;
+form1.Height:=136;
+form1.Position:=poScreenCenter;
+
+*Расположение кнопки*
+radiobutton1.Left:=(form1.Width div 2)-7;
+radiobutton1.Top:=(form1.Height div 2)-14;
+
+*Открыть программу*
+Form1.Show;
+
+*Позиционирование*  (var x,y:integer;)
+randomize;
+x:=random(1980);
+y:=random(1080);
+setcursorpos(x,y);
+
+*Стили формы*
+Form1.FormStyle:=fsstayontop; (поверх окон)
+
+*Клетка* (var z:TRECT; a,b,c,d:integer;)
+a:=form1.Left;
+b:=form1.Top;
+c:=form1.Height;
+d:=form1.Width;
+z:=rect(a,b,a+d,b+c);
+clipcursor(@z);
+
+*Поток*
+var
+  mt: TMyThread;
+begin
+  mt := TMyThread.Create(true); // создаём экземпляр класса
+  mt.FileName := 'Имя файла'; // тут указываем имя файла
+  mt.FreeOnTerminate := True; // автоуничтожение
+  mt.Resume; // запускаем поток
+
+*Выключение ПК*
+
+ShellExecute(handle, nil,'shutdown',' -s -t 00','', SW_SHOWNORMAL);
